@@ -4,6 +4,15 @@ body, html {
     overflow: hidden;
 }
 
+#timer{
+    user-select: none;
+    -moz-user-select: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
 #input:invalid {
     border: 1px solid red;
 }
