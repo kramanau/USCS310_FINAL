@@ -1,5 +1,9 @@
 let mouseDown = false;
 let currentColor = 'red';
+let lastX, lastY = 0;
+const canvas = $('#canvas');
+let currentStroke = 0;
+
 
 function createSvgElement(tag, att){
     var element = document.createElementNS("http://www.w3.org/2000/svg", tag);
@@ -9,28 +13,33 @@ function createSvgElement(tag, att){
     return element;
 }
 
-function colorPalette(xCord, yCord){
-    if(mouseDown){
-        const svg = $('#canvas');
-        const rectAtt = {x: xCord - 5, y: yCord - 5, width: "10", height: "10", fill: currentColor};
-        const rect = createSvgElement('rect', rectAtt);
-        svg.append(rect);
-        setTimeout(function(){colorPalette(xCord, yCord)}, 10);
+function drawLine(x1, y1){
+    const stroke = $(`#stroke${currentStroke}`)
+    if (stroke.length == 0){
+        lineAtt = { points: `${x1},${y1}`, stroke: "black", 'stroke-width': "5", fill: "none", id: `stroke${currentStroke}` };
+        const line = createSvgElement('polyline', lineAtt);
+        canvas.append(line);
+    } else {
+        const points = stroke.attr("points");
+        const newPoints = points + ` ${x1},${y1}`;
+        stroke.attr("points", newPoints);
     }
 }
 
 $(document).ready(function(){
-    $('body').mousedown(function(e){
+    $('#canvas').mousedown(function(e){
+        currentStroke += 1;
         mouseDown = true;
+        console.log(canvas.attr("x"));
     })
 
-    $('body').mouseup(function(e){
+    $('#canvas').mouseup(function(e){
         mouseDown = false;
     })
 
-    $('body').mousemove(function(e){
-        if(mouseDown){
-            colorPalette(e.pageX, e.pageY);
+    $('#canvas').mousemove(function(e){
+        if (mouseDown){
+            drawLine(e.pageX, e.pageY);
         }
     })
 })
