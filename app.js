@@ -51,16 +51,16 @@ $(document).ready(function(){
 
     $("#start").on('click', startTimer);
     
-    $('#canvas').mousedown(function(e){
+    $('body').mousedown(function(e){
         currentStroke += 1;
         mouseDown = true;
     })
 
-    $('#canvas').mouseup(function(e){
+    $('body').mouseup(function(e){
         mouseDown = false;
     })
 
-    $('#canvas').mousemove(function(e){
+    $('body').mousemove(function(e){
         if (mouseDown){
             drawLine(e.pageX, e.pageY);
         }
