@@ -1,36 +1,39 @@
 let mouseDown = false;
-let currentColor = 'red';
-let lastX, lastY = 0;
-const canvas = $('#canvas');
 let currentStroke = 0;
+const canvas = $('#canvas');
 
 
-function createSvgElement(tag, att){
-    var element = document.createElementNS("http://www.w3.org/2000/svg", tag);
-    $.each(att, function(key, value){
-        element.setAttribute(key, value);
-    })
-    return element;
-}
+const offsetX = 0;
+const offsetY = 75; //height of painttools bar
+
+canvas.attr('width', `${window.innerWidth}`);
+canvas.attr('height', `${window.innerHeight - 75}`);
+
+const userBrush = new Brush(canvas, offsetX, offsetY);
 
 function drawLine(x1, y1){
     const stroke = $(`#stroke${currentStroke}`)
     if (stroke.length == 0){
-        lineAtt = { points: `${x1},${y1}`, stroke: "black", 'stroke-width': "5", fill: "none", id: `stroke${currentStroke}` };
-        const line = createSvgElement('polyline', lineAtt);
-        canvas.append(line);
+        userBrush.createPolyline(x1, y1, currentStroke);
     } else {
-        const points = stroke.attr("points");
-        const newPoints = points + ` ${x1},${y1}`;
-        stroke.attr("points", newPoints);
+        userBrush.paintPoint(x1, y1, stroke);
     }
 }
 
+function validateRGB(){
+    const R = $('#rInput').val();
+    const G = $('#gInput').val();
+    const B = $('#bInput').val();
+    pattern = 
+    userBrush.updateColor(R,G,B);
+}
+
 $(document).ready(function(){
+    $("#setcolor").on('click', validateRGB);
+    
     $('#canvas').mousedown(function(e){
         currentStroke += 1;
         mouseDown = true;
-        console.log(canvas.attr("x"));
     })
 
     $('#canvas').mouseup(function(e){
