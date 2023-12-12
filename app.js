@@ -6,6 +6,8 @@ $("#rGroup").toggleClass("invalid");
 $("#gGroup").toggleClass("invalid");
 $("#bGroup").toggleClass("invalid");
 
+const thingsToDraw = ["chair", "table", "door", "car", "truck", "keyboard", "mouse"];
+
 const offsetX = 0;
 const offsetY = 75; //height of painttools bar
 
@@ -70,6 +72,9 @@ function validateRGB(){
 function startTimer(){
     $("#start").toggleClass("hidden");
     $("#timer").toggleClass("hidden");
+    const toDraw = thingsToDraw[Math.floor(Math.random() * thingsToDraw.length)];
+    $("#prompt").text(toDraw);
+    $("#prompt").toggleClass("hidden");
     const interval = setInterval(()=>{
         const seconds = parseInt($("#timer").text().split(':')[1]);
         const newSeconds = seconds - 1;

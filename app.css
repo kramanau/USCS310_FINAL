@@ -9,6 +9,13 @@ body, html {
     -moz-user-select: none;
 }
 
+#prompt{
+    user-select: none;
+    -moz-user-select: none;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .hidden {
     display: none !important;
 }
