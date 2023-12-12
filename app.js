@@ -69,6 +69,25 @@ function validateRGB(){
     }
 }
 
+function saveCanvas(){
+    const serializer = new XMLSerializer();
+    const svg = serializer.serializeToString(document.getElementById('canvas'));
+    localStorage.setItem('canvas', svg);
+}
+
+function loadCanvas(){
+    if (localStorage.getItem('canvas')){
+        const savedString = localStorage.getItem('canvas');
+        const parser = new DOMParser();
+        const svgDoc = parser.parseFromString(savedString, 'image/svg+xml');
+        const svgEl = $(svgDoc.documentElement);
+        canvas.empty()
+        for (const el of svgEl){
+            canvas.append(el);
+        }
+    }
+}
+
 function startTimer(){
     $("#start").toggleClass("hidden");
     $("#timer").toggleClass("hidden");
@@ -87,7 +106,11 @@ function startTimer(){
 
 $(document).ready(function(){
     $("#setcolor").on('click', validateRGB);
+
     $("#clear").on('click', () => canvas.empty());
+
+    $("#save").on('click', saveCanvas);
+    $("#load").on('click', loadCanvas);
 
     $("#start").on('click', startTimer);
     
