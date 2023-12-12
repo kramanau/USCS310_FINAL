@@ -13,6 +13,11 @@ body, html {
     display: none !important;
 }
 
+.invalid {
+    border: 1px solid red;
+    background-color: #ffdddd;
+}
+
 #input:invalid {
     border: 1px solid red;
 }

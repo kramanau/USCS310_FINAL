@@ -2,6 +2,9 @@ let mouseDown = false;
 let currentStroke = 0;
 const canvas = $('#canvas');
 $("#start").toggleClass("hidden");
+$("#rGroup").toggleClass("invalid");
+$("#gGroup").toggleClass("invalid");
+$("#bGroup").toggleClass("invalid");
 
 const offsetX = 0;
 const offsetY = 75; //height of painttools bar
@@ -21,14 +24,46 @@ function drawLine(x1, y1){
 }
 
 function validateRGB(){
+    let isValid = true;
     const R = $('#rInput').val();
     const G = $('#gInput').val();
     const B = $('#bInput').val();
     const pattern = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
-    if(pattern.test(R) && pattern.test(G) && pattern.test(B)){
-        userBrush.updateColor(R,G,B);
+    if(!pattern.test(R)){
+        isValid = false;
+        if(!$("#rGroup").attr("class").includes("invalid")){
+            $("#rGroup").toggleClass("invalid");
+        }
+    } else{
+        if($("#rGroup").attr("class").includes("invalid")){
+            $("#rGroup").toggleClass("invalid");
+        }
+    }
+
+    if(!pattern.test(G)){
+        isValid = false;
+        if(!$("#gGroup").attr("class").includes("invalid")){
+            $("#gGroup").toggleClass("invalid");
+        }
     } else {
-        alert('Failed to set color.');
+        if($("#gGroup").attr("class").includes("invalid")){
+            $("#gGroup").toggleClass("invalid");
+        }
+    }
+
+    if(!pattern.test(B)){
+        isValid = false;
+        if(!$("#bGroup").attr("class").includes("invalid")){
+            $("#bGroup").toggleClass("invalid");
+        } 
+    } else {
+        if($("#bGroup").attr("class").includes("invalid")){
+            $("#bGroup").toggleClass("invalid");
+        }
+    }
+
+    if(isValid){
+        userBrush.updateColor(R,G,B);
     }
 }
 
@@ -38,7 +73,6 @@ function startTimer(){
     const interval = setInterval(()=>{
         const seconds = parseInt($("#timer").text().split(':')[1]);
         const newSeconds = seconds - 1;
-        console.log(String(newSeconds).padStart(2,'0'));
         $("#timer").text(':'+String(newSeconds).padStart(2,'0'));
         if (newSeconds === 0){
             clearInterval(interval);
@@ -48,6 +82,7 @@ function startTimer(){
 
 $(document).ready(function(){
     $("#setcolor").on('click', validateRGB);
+    $("#clear").on('click', () => canvas.empty());
 
     $("#start").on('click', startTimer);
     

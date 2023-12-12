@@ -9,18 +9,18 @@
     <body>
         <div id="container">
             <div id="painttools">
-                <button class="btn btn-danger">Clear</button>
+                <button class="btn btn-danger" id="clear">Clear</button>
                 <a id="currentColor"></a>
                 <div class="d-flex" style="margin-left:10px" >
-                    <div class="form-group" style="align-items: center; display: flex;">
+                    <div class="form-group invalid" style="align-items: center; display: flex;" id="rGroup">
                         <label for="rInput">R</label>
                         <input id="rInput" name="R" style="width: 50px; margin-left: 5px;" value="0">
                     </div>
-                    <div class="form-group" style="align-items: center; display: flex;">
+                    <div class="form-group invalid" style="align-items: center; display: flex;" id="gGroup">
                         <label for="gInput">G</label>
                         <input id="gInput" name="G" style="width: 50px; margin-left: 5px;" value="0">
                     </div>
-                    <div class="form-group" style="align-items: center; display: flex;">
+                    <div class="form-group invalid" style="align-items: center; display: flex;" id="bGroup">
                         <label for="bInput">B</label>
                         <input id="bInput" name="B" style="width: 50px; margin-left: 5px;" value="0">
                     </div>
